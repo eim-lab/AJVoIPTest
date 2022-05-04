@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28 //you might change this to highest possible sdk version
+    //compileSdkVersion 23  //min compile sdk version 23 is required for AJVoIP. You can remove this line if you are using a newer comppile sdk by defau;t
+    //buildToolsVersion '26.0.2'  //usually not need to specify this explicitely
+    defaultConfig {
+        applicationId "com.ajvoiptest"  //application package name
+        minSdkVersion 14  //You can set this as low as 9 (in this case you might need to lower the support library version declared below)
+        targetSdkVersion 28  //you can set it to as low as 9, but you can also target the latest API level (including 28 or higher ) if you wish
+        versionCode 3  //this is the version number of your app. set it to any value as you wish
+        versionName "3.0"  //this is the version number of your app. set it to any value as you wish
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    //lint options are optional. you can remove or edit after your needs
+    lintOptions {
+        disable 'MissingTranslation'
+        check 'NewApi', 'InlinedApi'
+        //quiet true
+        //abortOnError true
+        //ignoreWarnings true
+    }
+
+    //this just excludes a few well common unneded files. you can remove it if you wish
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    //fine-tune your build after your needs
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            //shrinkResources true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+    }
+}
+
+//modify the dependencies after your needs. the most important thing here is to include AJVoIP: compile project(":AJVoIP")
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //testImplementation 'junit:junit:4.12'
+    //androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation project(":AJVoIP")
+    //compile 'com.android.support:support-v4:23.4.0'  //might be required only if using SDK 22 or lower
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+}
+
